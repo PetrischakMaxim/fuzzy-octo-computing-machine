@@ -368,13 +368,14 @@ export interface ApiAdminAdmin extends Schema.CollectionType {
     singularName: 'admin';
     pluralName: 'admins';
     displayName: 'Admin';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     name: Attribute.String;
-    date: Attribute.Date;
+    balance: Attribute.Decimal;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -386,6 +387,43 @@ export interface ApiAdminAdmin extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::admin.admin',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    sku_id: Attribute.String;
+    price: Attribute.Decimal;
+    category: Attribute.String;
+    is_in_stock: Attribute.Boolean;
+    title: Attribute.String;
+    quantity: Attribute.Integer;
+    description: Attribute.RichText;
+    media: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
       'oneToOne',
       'admin::user'
     > &
@@ -801,8 +839,10 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    is_premium: Attribute.Boolean;
     avatar: Attribute.Media;
+    UID: Attribute.UID<'plugin::users-permissions.user', 'username'>;
+    balance: Attribute.Decimal;
+    nickname: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -831,6 +871,7 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'api::admin.admin': ApiAdminAdmin;
+      'api::product.product': ApiProductProduct;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;

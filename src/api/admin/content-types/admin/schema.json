@@ -4,7 +4,8 @@
   "info": {
     "singularName": "admin",
     "pluralName": "admins",
-    "displayName": "Admin"
+    "displayName": "Admin",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -14,8 +15,8 @@
     "name": {
       "type": "string"
     },
-    "date": {
-      "type": "date"
+    "balance": {
+      "type": "decimal"
     }
   }
 }
